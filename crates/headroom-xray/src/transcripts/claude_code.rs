@@ -27,8 +27,7 @@ struct Line {
 }
 
 pub fn parse(path: &Path) -> Result<Transcript> {
-    let file = File::open(path)
-        .with_context(|| format!("opening {}", path.display()))?;
+    let file = File::open(path).with_context(|| format!("opening {}", path.display()))?;
     let reader = BufReader::new(file);
 
     let mut transcript = Transcript::default();
@@ -52,14 +51,19 @@ pub fn parse(path: &Path) -> Result<Transcript> {
         }
 
         let Some(msg) = parsed.message else { continue };
-        let Some(content) = msg.get("content").and_then(|c| c.as_array()) else { continue };
+        let Some(content) = msg.get("content").and_then(|c| c.as_array()) else {
+            continue;
+        };
 
         for block in content {
             let block_type = block.get("type").and_then(|t| t.as_str()).unwrap_or("");
             match block_type {
                 "tool_use" => {
                     let id = block.get("id").and_then(|i| i.as_str()).unwrap_or("");
-                    let name = block.get("name").and_then(|n| n.as_str()).unwrap_or("unknown");
+                    let name = block
+                        .get("name")
+                        .and_then(|n| n.as_str())
+                        .unwrap_or("unknown");
                     if !id.is_empty() {
                         tool_use_id_to_name.insert(id.to_string(), name.to_string());
                     }
@@ -137,7 +141,9 @@ pub fn latest_session_for_cwd() -> Option<std::path::PathBuf> {
         if path.extension().and_then(|e| e.to_str()) != Some("jsonl") {
             continue;
         }
-        let Some(modified) = entry.metadata().ok().and_then(|m| m.modified().ok()) else { continue };
+        let Some(modified) = entry.metadata().ok().and_then(|m| m.modified().ok()) else {
+            continue;
+        };
         if newest.as_ref().map_or(true, |(_, t)| modified > *t) {
             newest = Some((path, modified));
         }
@@ -171,7 +177,11 @@ mod tests {
         let mut f = tempfile::NamedTempFile::new().unwrap();
         writeln!(f, r#"{{ "type": "user", "message": {{ "content": [] }} }}"#).unwrap();
         writeln!(f, r#"this is not json"#).unwrap();
-        writeln!(f, r#"{{ "type": "assistant", "message": {{ "content": [] }} }}"#).unwrap();
+        writeln!(
+            f,
+            r#"{{ "type": "assistant", "message": {{ "content": [] }} }}"#
+        )
+        .unwrap();
         let t = parse(f.path()).expect("parser must not bail on malformed lines");
         assert_eq!(t.blocks.len(), 0);
     }

@@ -25,8 +25,8 @@ fn footer_renders_top3_with_hints() {
 }
 
 use assert_cmd::Command;
-use predicates::str::contains;
 use predicates::prelude::PredicateBooleanExt;
+use predicates::str::contains;
 
 fn has_node() -> bool {
     std::process::Command::new("node")

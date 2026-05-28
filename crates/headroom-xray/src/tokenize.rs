@@ -33,9 +33,18 @@ mod tests {
         t.push("Bash", "another bash output\n".repeat(50));
         t.push("Read", "file content here\n".repeat(20));
         let counts = count_by_tool(&t).unwrap();
-        assert!(counts.get("Bash").copied().unwrap_or(0) > 100, "Bash should have substantial tokens");
-        assert!(counts.get("Read").copied().unwrap_or(0) > 0, "Read should be present");
-        assert!(counts.get("Bash").unwrap() > counts.get("Read").unwrap(), "Bash > Read");
+        assert!(
+            counts.get("Bash").copied().unwrap_or(0) > 100,
+            "Bash should have substantial tokens"
+        );
+        assert!(
+            counts.get("Read").copied().unwrap_or(0) > 0,
+            "Read should be present"
+        );
+        assert!(
+            counts.get("Bash").unwrap() > counts.get("Read").unwrap(),
+            "Bash > Read"
+        );
     }
 
     #[test]

@@ -51,8 +51,9 @@ pub fn check() -> Result<(), NodeError> {
         return Err(NodeError::NotFound);
     }
 
-    let raw: &str = std::str::from_utf8(&node_out.stdout)
-        .map_err(|e| NodeError::InvocationFailed(std::io::Error::new(std::io::ErrorKind::InvalidData, e)))?;
+    let raw: &str = std::str::from_utf8(&node_out.stdout).map_err(|e| {
+        NodeError::InvocationFailed(std::io::Error::new(std::io::ErrorKind::InvalidData, e))
+    })?;
     let version_str = raw.trim().trim_start_matches('v');
     let major: u32 = version_str
         .split('.')
