@@ -745,6 +745,7 @@ class HeadroomProxy(
             CCRComponents,
             HeadroomEngine,
             MemoryComponents,
+            OpenAIComponents,
         )
 
         engine_session_store = SessionTrackerStore(
@@ -757,6 +758,15 @@ class HeadroomProxy(
         ac = AnthropicComponents(
             pipeline=self.anthropic_pipeline,
             provider=self.anthropic_provider,
+            session_tracker_store=engine_session_store,
+            get_compression_cache=self._get_compression_cache,
+            config=self.config,
+            usage_reporter=self.usage_reporter,
+        )
+
+        oc = OpenAIComponents(
+            pipeline=self.openai_pipeline,
+            provider=self.openai_provider,
             session_tracker_store=engine_session_store,
             get_compression_cache=self._get_compression_cache,
             config=self.config,
@@ -784,6 +794,7 @@ class HeadroomProxy(
             usage_reporter=self.usage_reporter,
             salt=b"headroom-proxy-engine",
             anthropic_components=ac,
+            openai_components=oc,
             ccr_components=ccr,
             memory_components=mc,
         )
