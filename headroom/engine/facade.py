@@ -239,7 +239,12 @@ class _ResponsesCompressor:
     also accesses ``self.openai_pipeline``, ``self.openai_provider``,
     ``self.OPENAI_RESPONSES_OUTPUT_TYPES``, and
     ``self.OPENAI_RESPONSES_ROUTER_MIN_BYTES`` — all forwarded from the same
-    ``OpenAIComponents`` source.
+    ``OpenAIComponents`` source.  It additionally memoizes per-unit results
+    through ``self._get_openai_responses_cached_unit`` /
+    ``self._store_openai_responses_cached_unit`` (and the shared
+    ``self._openai_responses_unit_cache`` helper), which lazily bootstrap their
+    own lock + LRU on ``self`` — so they are bound below without any
+    constructor state.
 
     Do NOT add extra attributes: stay minimal so any future change to the
     handler surface is immediately visible as an AttributeError rather than
@@ -270,6 +275,18 @@ class _ResponsesCompressor:
         )
         self._compress_openai_responses_live_text_units_with_router = (  # type: ignore[method-assign]
             OpenAIHandlerMixin._compress_openai_responses_live_text_units_with_router.__get__(self)
+        )
+        # Per-unit result memoization (the router path's LRU). These three
+        # bootstrap their own lock + OrderedDict on ``self`` via getattr/setattr,
+        # so no constructor state is needed here.
+        self._openai_responses_unit_cache = (  # type: ignore[method-assign]
+            OpenAIHandlerMixin._openai_responses_unit_cache.__get__(self)
+        )
+        self._get_openai_responses_cached_unit = (  # type: ignore[method-assign]
+            OpenAIHandlerMixin._get_openai_responses_cached_unit.__get__(self)
+        )
+        self._store_openai_responses_cached_unit = (  # type: ignore[method-assign]
+            OpenAIHandlerMixin._store_openai_responses_cached_unit.__get__(self)
         )
 
 
