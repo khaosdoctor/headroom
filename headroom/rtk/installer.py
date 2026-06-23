@@ -179,13 +179,21 @@ def register_claude_hooks(rtk_path: Path | None = None) -> bool:
     # stray prompt can never block either.
     try:
         with tempfile.TemporaryFile(mode="w+", encoding="utf-8", errors="replace") as out:
-            result = subprocess.run(
-                [str(rtk_path), "init", "--global", "--auto-patch"],
-                stdin=subprocess.DEVNULL,
-                stdout=out,
-                stderr=out,
-                timeout=10,
-            )
+            try:
+                result = subprocess.run(
+                    [str(rtk_path), "init", "--global", "--auto-patch"],
+                    stdin=subprocess.DEVNULL,
+                    stdout=out,
+                    stderr=out,
+                    timeout=10,
+                )
+            except subprocess.TimeoutExpired:
+                # Read the temp file while it is still open — the outer handler
+                # runs after the `with` closes it, so any captured diagnostics
+                # would be gone by then.
+                out.seek(0)
+                logger.warning("rtk init timed out: %s", out.read().strip())
+                return False
             if result.returncode == 0:
                 logger.info("rtk hooks registered in Claude Code")
                 return True
