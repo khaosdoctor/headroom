@@ -174,6 +174,15 @@ class HeadroomCallback:
         result: dict[str, Any] = resp.json()
         return result
 
+    async def async_post_call_success_hook(
+        self,
+        data: dict[str, Any],
+        user_api_key_dict: Any,
+        response: Any,
+    ) -> Any:
+        """Called by the LiteLLM proxy after a successful call. Returns response unchanged."""
+        return response
+
     async def async_success_handler(
         self, kwargs: dict, response: Any, start_time: Any, end_time: Any
     ) -> None:
