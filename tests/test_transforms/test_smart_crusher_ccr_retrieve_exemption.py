@@ -12,8 +12,6 @@ import json
 
 import pytest
 
-import pytest
-
 from headroom import OpenAIProvider, Tokenizer
 from headroom.ccr.tool_injection import CCR_TOOL_NAME
 from headroom.config import SmartCrusherConfig
