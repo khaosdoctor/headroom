@@ -64,6 +64,75 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [0.28.0](https://github.com/khaosdoctor/headroom/compare/v0.27.0...v0.28.0) (2026-06-24)
+
+
+### Features
+
+* add --disable-kompress-fallback to restore legacy PASSTHROUGH fallback ([#1185](https://github.com/khaosdoctor/headroom/issues/1185)) ([f309244](https://github.com/khaosdoctor/headroom/commit/f309244a77fc3fbb74c5db0082e7dcbebd6ffe52))
+* add HEADROOM_KEEPALIVE_EXPIRY to keep upstream connections warm ([#1124](https://github.com/khaosdoctor/headroom/issues/1124)) ([85786b3](https://github.com/khaosdoctor/headroom/commit/85786b33a3a88b8c905739aa34ccfafa01a89e5d))
+* **azure-foundry:** derive upstream URL from ANTHROPIC_FOUNDRY_RESOURCE ([#1138](https://github.com/khaosdoctor/headroom/issues/1138)) ([e5031b0](https://github.com/khaosdoctor/headroom/commit/e5031b01219278620431b5560b247e65f1b08a13))
+* **cache:** attribute prompt-cache misses to TTL lapse vs prefix change ([#1313](https://github.com/khaosdoctor/headroom/issues/1313)) ([#1343](https://github.com/khaosdoctor/headroom/issues/1343)) ([4658721](https://github.com/khaosdoctor/headroom/commit/4658721ea0bae5d0d061d377428d4031b9722d75))
+* **code:** add Perl support to code-aware compressor ([#1125](https://github.com/khaosdoctor/headroom/issues/1125)) ([f39858c](https://github.com/khaosdoctor/headroom/commit/f39858c23325f9f27b47a738731e7260f7b59d9e))
+* headroom wrap opencode / unwrap opencode CLI ([#1105](https://github.com/khaosdoctor/headroom/issues/1105)) ([b4571cc](https://github.com/khaosdoctor/headroom/commit/b4571cc346f6bba29e600fa82bbf5cf302e8ea27))
+* **learn:** weight loops in Headroom Learn + RTK-loop eval ([#1160](https://github.com/khaosdoctor/headroom/issues/1160)) ([14e8dc4](https://github.com/khaosdoctor/headroom/commit/14e8dc4c8408b8014433ba7589bbb1dff7805134))
+* **learn:** write per-project learnings to CLAUDE.local.md by default ([#1115](https://github.com/khaosdoctor/headroom/issues/1115)) ([ced75e4](https://github.com/khaosdoctor/headroom/commit/ced75e4718b5fd84d07cbd68273dcf9b9ef878a3))
+* **proxy:** add request timeout config ([#738](https://github.com/khaosdoctor/headroom/issues/738)) ([c0745d4](https://github.com/khaosdoctor/headroom/commit/c0745d4161d19e21ca36506f7733f0776e19e1a8))
+* **proxy:** support glob patterns in exclude_tools ([#870](https://github.com/khaosdoctor/headroom/issues/870)) ([#1259](https://github.com/khaosdoctor/headroom/issues/1259)) ([a2159c0](https://github.com/khaosdoctor/headroom/commit/a2159c0b66a7aa1b7f64057a1c8e3e50f0a43e37))
+* **read-maturation:** activity-based hold-back Read maturation (Mechanism B) ([#1068](https://github.com/khaosdoctor/headroom/issues/1068)) ([723b80c](https://github.com/khaosdoctor/headroom/commit/723b80c09123f902197b45b3676065d0e9c77af0))
+* **savings:** durable savings ledger + headroom savings command ([#1127](https://github.com/khaosdoctor/headroom/issues/1127)) ([978ffa0](https://github.com/khaosdoctor/headroom/commit/978ffa0a6ab9da1a75239270e17961530c213b9d))
+* **wrap:** add --1m to preserve the 1M context window on wrap claude ([#1158](https://github.com/khaosdoctor/headroom/issues/1158)) ([#1351](https://github.com/khaosdoctor/headroom/issues/1351)) ([b50d9c1](https://github.com/khaosdoctor/headroom/commit/b50d9c17ceca890a0fcc2469b9aff27d0026ca39))
+
+
+### Bug Fixes
+
+* address review feedback and merge main ([946c3bb](https://github.com/khaosdoctor/headroom/commit/946c3bba51e684fcaf0b11db4d18eb979e5e942f))
+* **agent-evals:** Phase 0 — coding-agent accuracy A/B framework ([#1037](https://github.com/khaosdoctor/headroom/issues/1037)) ([84f9871](https://github.com/khaosdoctor/headroom/commit/84f9871e303d587f5b406036b97b9f5a689c1b05))
+* **agno:** tolerate streaming tool-call SDK objects in parser ([#1312](https://github.com/khaosdoctor/headroom/issues/1312)) ([#1336](https://github.com/khaosdoctor/headroom/issues/1336)) ([5986c22](https://github.com/khaosdoctor/headroom/commit/5986c2260f07788e356e0884179d9b3f4c0df6e3))
+* bump codebase-memory-mcp to v0.8.1 ([#1284](https://github.com/khaosdoctor/headroom/issues/1284)) ([530318b](https://github.com/khaosdoctor/headroom/commit/530318b425cba8fb161111b135451a838d628e96))
+* **ccr:** propagate --no-ccr-marker flag to all compressors ([#1022](https://github.com/khaosdoctor/headroom/issues/1022)) ([#1197](https://github.com/khaosdoctor/headroom/issues/1197)) ([0c9b42a](https://github.com/khaosdoctor/headroom/commit/0c9b42a919b0c570094b7934de686b93dd89b05c))
+* **ccr:** skip Anthropic marker emission when tool injection is deferred ([#1273](https://github.com/khaosdoctor/headroom/issues/1273)) ([2cae13d](https://github.com/khaosdoctor/headroom/commit/2cae13dd798b8abdd9ef94fbcf10a968e70e714e))
+* **ci:** normalize Windows CRLF line endings in PR governance script ([#1012](https://github.com/khaosdoctor/headroom/issues/1012)) ([5194388](https://github.com/khaosdoctor/headroom/commit/5194388b6652d823ad6ab1d8c17d5572b7f0ec23))
+* **cli:** fall back gracefully when embedding-server sidecar is absent ([#1206](https://github.com/khaosdoctor/headroom/issues/1206)) ([38f1404](https://github.com/khaosdoctor/headroom/commit/38f1404432984915924f74997d886b89c420b2a8))
+* **code:** slice tree-sitter byte offsets as UTF-8 ([#1332](https://github.com/khaosdoctor/headroom/issues/1332)) ([8238402](https://github.com/khaosdoctor/headroom/commit/82384022bd38304a37e7eade4b5fc98d42f747a8))
+* **code:** validate Python compressed syntax ([#1302](https://github.com/khaosdoctor/headroom/issues/1302)) ([cbd361d](https://github.com/khaosdoctor/headroom/commit/cbd361de2af266b6d72e246185f622c48ec5a6dc))
+* **code:** verify a real parse in tree-sitter availability check ([#1231](https://github.com/khaosdoctor/headroom/issues/1231)) ([#1299](https://github.com/khaosdoctor/headroom/issues/1299)) ([5e0bb69](https://github.com/khaosdoctor/headroom/commit/5e0bb697254b7ec87e3191fa73031bde9321a79c))
+* **codex:** retag threads on init so Codex Desktop history stays visible ([#961](https://github.com/khaosdoctor/headroom/issues/961)) ([#1349](https://github.com/khaosdoctor/headroom/issues/1349)) ([e6bbc40](https://github.com/khaosdoctor/headroom/commit/e6bbc40b115bc3b31d68da4dabe280d38e1b691c))
+* **codex:** stop pinning Codex memory MCP to one project db ([#1269](https://github.com/khaosdoctor/headroom/issues/1269)) ([ad7993b](https://github.com/khaosdoctor/headroom/commit/ad7993bf15e590a7d164407264721ce1b5128b1e))
+* **dashboard:** explain that $ savings need litellm on python 3.13 ([d917b64](https://github.com/khaosdoctor/headroom/commit/d917b649a058564feee232d75638dcd4d16d97db))
+* **docker:** persist session history across container revisions ([#1118](https://github.com/khaosdoctor/headroom/issues/1118)) ([5912d65](https://github.com/khaosdoctor/headroom/commit/5912d65674c708b00cff9a8cbc3b529fd2ab69fa))
+* **install:** guard install_agent_ensure against duplicate runtime spawns ([#1301](https://github.com/khaosdoctor/headroom/issues/1301)) ([8da0b4e](https://github.com/khaosdoctor/headroom/commit/8da0b4e565be2d5f798741bb9b7bee70c2102c8c))
+* **install:** repair macOS launchd restart/start lifecycle ([#1290](https://github.com/khaosdoctor/headroom/issues/1290)) ([da1a397](https://github.com/khaosdoctor/headroom/commit/da1a3973ed79d89617087ec315e77fb82356c03b))
+* **install:** stop duplicating ENTRYPOINT in persistent-docker runtime command ([#833](https://github.com/khaosdoctor/headroom/issues/833)) ([#1348](https://github.com/khaosdoctor/headroom/issues/1348)) ([feedead](https://github.com/khaosdoctor/headroom/commit/feedead07772a27b872a448281a2d17e539d4702))
+* **langchain:** disable streaming on wrapped model during ainvoke() ([#1287](https://github.com/khaosdoctor/headroom/issues/1287)) ([3590046](https://github.com/khaosdoctor/headroom/commit/359004646bb2cda2b99cf3ef154539b7fa81aa72))
+* **mcp:** report correct savings_percent in headroom_compress ([#1106](https://github.com/khaosdoctor/headroom/issues/1106)) ([f216e43](https://github.com/khaosdoctor/headroom/commit/f216e430559759f51b53eb44e76e030e6a83c80a))
+* **output-savings:** adopt re-learned baselines and cover the hot-reload path with tests ([169aa4a](https://github.com/khaosdoctor/headroom/commit/169aa4a8533ed7be447fdc71b43baef25d6d25d8))
+* **output-savings:** reload learned baseline so output reduction surfaces without a restart ([7f466f7](https://github.com/khaosdoctor/headroom/commit/7f466f7dffe6c0e9c164cb114db87b4b67948296))
+* **proxy:** add an Anthropic buffered read-timeout override ([#1331](https://github.com/khaosdoctor/headroom/issues/1331)) ([3be2526](https://github.com/khaosdoctor/headroom/commit/3be2526b76caa8ff1050e44807386874571e079b))
+* **proxy:** build SSL contexts for custom CA bundles ([#1134](https://github.com/khaosdoctor/headroom/issues/1134)) ([561ba17](https://github.com/khaosdoctor/headroom/commit/561ba17ec2e05b463682fd3ecfe7ca43b558684f))
+* **proxy:** forward request-id headers on the streaming path ([#1100](https://github.com/khaosdoctor/headroom/issues/1100)) ([#1258](https://github.com/khaosdoctor/headroom/issues/1258)) ([3d59df7](https://github.com/khaosdoctor/headroom/commit/3d59df7be889d6d7218c5552e40a4f736d80a3af))
+* **proxy:** gate CCR retrieve/compress endpoints to loopback ([#1338](https://github.com/khaosdoctor/headroom/issues/1338)) ([acafb2d](https://github.com/khaosdoctor/headroom/commit/acafb2d0f668dc5f5848fa2940545743899a30c2))
+* **proxy:** honor force_kompress routing profile ([#996](https://github.com/khaosdoctor/headroom/issues/996)) ([b4682d6](https://github.com/khaosdoctor/headroom/commit/b4682d6f91c782286553875b7fd8cee6101f1b0f))
+* **proxy:** keep large compression results on the critical path ([#296](https://github.com/khaosdoctor/headroom/issues/296)) ([#1352](https://github.com/khaosdoctor/headroom/issues/1352)) ([90734b6](https://github.com/khaosdoctor/headroom/commit/90734b691a50669eaaae7c8739243e7bfc313326))
+* **proxy:** preserve Responses memory continuations with store=false ([#1103](https://github.com/khaosdoctor/headroom/issues/1103)) ([cdfeeac](https://github.com/khaosdoctor/headroom/commit/cdfeeacc63e6cb98d34e245f2330f0e1af531d32))
+* **proxy:** report real input tokens on streaming message_start ([#1132](https://github.com/khaosdoctor/headroom/issues/1132)) ([#1305](https://github.com/khaosdoctor/headroom/issues/1305)) ([70cc96a](https://github.com/khaosdoctor/headroom/commit/70cc96a386baff345669722dc15fde694811d2d6))
+* **proxy:** retry upstream 429 with Retry-After on both forwarders ([#1329](https://github.com/khaosdoctor/headroom/issues/1329)) ([90bee89](https://github.com/khaosdoctor/headroom/commit/90bee89243004846cfc86ad3bf888579acb27522))
+* **router:** degrade to pure-Python detection on native panic ([#1123](https://github.com/khaosdoctor/headroom/issues/1123)) ([#1260](https://github.com/khaosdoctor/headroom/issues/1260)) ([a00fb67](https://github.com/khaosdoctor/headroom/commit/a00fb6761eddf59ede6767211da06f8840552f14))
+* **smart-crusher:** honor enable_ccr_marker on the opaque-blob path ([#1130](https://github.com/khaosdoctor/headroom/issues/1130)) ([27d6f8e](https://github.com/khaosdoctor/headroom/commit/27d6f8e2a767b58eb7d2f47599f68e8bdc49fb7f))
+* **subscription:** run transcript token scan off the event loop ([#1263](https://github.com/khaosdoctor/headroom/issues/1263)) ([f03021f](https://github.com/khaosdoctor/headroom/commit/f03021f1b69ec1a099436a5f80e68d5266cad8bf))
+* **tls:** add HEADROOM_TLS_STRICT=0 toggle for corporate SSL inspection ([#1308](https://github.com/khaosdoctor/headroom/issues/1308)) ([#1341](https://github.com/khaosdoctor/headroom/issues/1341)) ([52068dd](https://github.com/khaosdoctor/headroom/commit/52068dd650d06d400db472efe6c7b47f539612aa))
+* **tokenizers:** price CJK/Kana/Hangul at ~1 token per char in EstimatingTokenCounter ([#1093](https://github.com/khaosdoctor/headroom/issues/1093)) ([a35fe86](https://github.com/khaosdoctor/headroom/commit/a35fe86e87725e660779f9cbbb0825f87f59d532))
+* **windows:** pin UTF-8 encoding on text-mode subprocess calls ([#1311](https://github.com/khaosdoctor/headroom/issues/1311)) ([d633e81](https://github.com/khaosdoctor/headroom/commit/d633e8172ccfde4b08c302ecc4c4ef4ce27785f1))
+* **wrap:** add Copilot unwrap command ([#1251](https://github.com/khaosdoctor/headroom/issues/1251)) ([b4fde0c](https://github.com/khaosdoctor/headroom/commit/b4fde0c3a4c2585d4aeda2c6987fe509a5296fe5))
+* **wrap:** isolate proxy stdio from proxy.log on Windows ([#1191](https://github.com/khaosdoctor/headroom/issues/1191)) ([959ab0d](https://github.com/khaosdoctor/headroom/commit/959ab0de471293e76df1f124ed0090c62e62c308))
+* **wrap:** keep agent savings opt-in ([#1294](https://github.com/khaosdoctor/headroom/issues/1294)) ([b829ceb](https://github.com/khaosdoctor/headroom/commit/b829ceba84ce058dadb4e70f6766af13806a4385))
+* **wrap:** show the dashboard URL when the proxy is already running ([#1313](https://github.com/khaosdoctor/headroom/issues/1313)) ([b0146c4](https://github.com/khaosdoctor/headroom/commit/b0146c4ccd1e75dc7db21ef7f00dd4b3aa80e276))
+
+
+### Performance Improvements
+
+* **compression:** take large cold-start contexts off the synchronous kompress path ([#1171](https://github.com/khaosdoctor/headroom/issues/1171)) ([#1298](https://github.com/khaosdoctor/headroom/issues/1298)) ([6c68ff4](https://github.com/khaosdoctor/headroom/commit/6c68ff4e9f911af9dbd6108367acb3cab80d6f5e))
+
 ## [0.27.0](https://github.com/chopratejas/headroom/compare/v0.26.0...v0.27.0) (2026-06-22)
 
 
