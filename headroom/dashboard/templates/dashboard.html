@@ -194,9 +194,11 @@
                           x-text="formatNumber(stats.tokens?.proxy_compression_saved || 0) + ' proxy tokens only; ' + cliFilteringLabel + ' excluded from $'"></span>
                     <span x-show="!((stats.persistent_savings?.lifetime?.compression_savings_usd || 0) > 0) && stats.litellm_available !== false"
                           x-text="formatNumber(stats.requests?.total || 0) + ' requests processed'"></span>
-                    <!-- Pricing is LiteLLM-only, and LiteLLM isn't installable on Python 3.14+ -->
+                    <!-- Pricing is LiteLLM-only. LiteLLM currently can't install on
+                         newer Python (e.g. 3.14+); state the fact, not the version,
+                         so the hint stays correct if that changes. -->
                     <span x-show="!((stats.persistent_savings?.lifetime?.compression_savings_usd || 0) > 0) && stats.litellm_available === false">
-                        Cost pricing needs LiteLLM, which isn't available on Python 3.14+. Reinstall Headroom on Python 3.13:
+                        Cost pricing needs LiteLLM, which isn't installed in this environment. If you're on a Python version LiteLLM doesn't support yet, reinstall Headroom on Python 3.13:
                         <code class="text-gray-400">pipx reinstall headroom-ai --python python3.13</code>
                     </span>
                 </div>
@@ -890,6 +892,42 @@
                                 <div class="text-[11px] uppercase tracking-[0.18em] text-cyan-300/75">Prefix Freeze Net</div>
                                 <div data-testid="freeze-net-value" class="mt-2 text-3xl font-light" :class="prefixFreezeNet >= 0 ? 'text-cyan-50' : 'text-red-400'" x-text="(prefixFreezeNet >= 0 ? '+' : '-') + formatNumber(Math.abs(prefixFreezeNet))"></div>
                                 <div class="mt-1 text-xs text-gray-500" x-text="formatNumber(stats.prefix_cache?.prefix_freeze?.busts_avoided || 0) + ' busts avoided, ' + formatNumber(stats.prefix_cache?.prefix_freeze?.compression_foregone_tokens || 0) + ' foregone'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <!-- Cache miss attribution: why expected-cache turns missed (#1313) -->
+                <template x-if="hasMissAttribution">
+                    <div class="mt-5 border-t border-border pt-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <div class="text-xs text-gray-500 uppercase tracking-wide">Cache Miss Attribution</div>
+                                <div class="text-[11px] text-gray-600 mt-0.5">Why turns that expected a prompt-cache hit missed — TTL lapse (consider a longer TTL) vs the cacheable prefix changing</div>
+                            </div>
+                            <div data-testid="miss-attr-headline" class="rounded-full border bg-black/20 px-3 py-1 text-[11px] uppercase tracking-[0.18em]"
+                                 :class="(missAttribution.ttl_expiry_pct || 0) >= (missAttribution.prefix_change_pct || 0) ? 'border-violet-400/25 text-violet-300/90' : 'border-amber-400/25 text-amber-300/90'"
+                                 x-text="(missAttribution.ttl_expiry_pct || 0) >= (missAttribution.prefix_change_pct || 0) ? 'Mostly TTL lapse' : 'Mostly prefix change'"></div>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <div class="rounded-2xl border border-white/8 bg-black/20 p-4">
+                                <div class="text-[11px] uppercase tracking-[0.18em] text-violet-300/75">TTL Expiry</div>
+                                <div data-testid="miss-attr-ttl-value" class="mt-2 text-3xl font-light text-violet-50" x-text="formatNumber(missAttribution.ttl_expiry || 0)"></div>
+                                <div class="mt-1 text-xs text-gray-500" x-text="(missAttribution.ttl_expiry_pct || 0).toFixed(1) + '% of attributed — idle past cache TTL'"></div>
+                            </div>
+                            <div class="rounded-2xl border border-white/8 bg-black/20 p-4">
+                                <div class="text-[11px] uppercase tracking-[0.18em] text-amber-300/75">Prefix Change</div>
+                                <div data-testid="miss-attr-prefix-value" class="mt-2 text-3xl font-light text-amber-50" x-text="formatNumber(missAttribution.prefix_change || 0)"></div>
+                                <div class="mt-1 text-xs text-gray-500" x-text="(missAttribution.prefix_change_pct || 0).toFixed(1) + '% of attributed — cached prefix shifted'"></div>
+                            </div>
+                            <div class="rounded-2xl border border-white/8 bg-black/20 p-4">
+                                <div class="text-[11px] uppercase tracking-[0.18em] text-gray-400">Unknown</div>
+                                <div data-testid="miss-attr-unknown-value" class="mt-2 text-3xl font-light text-gray-300" x-text="formatNumber(missAttribution.unknown || 0)"></div>
+                                <div class="mt-1 text-xs text-gray-500">stable prefix, within TTL</div>
+                            </div>
+                            <div class="rounded-2xl border border-white/8 bg-black/20 p-4">
+                                <div class="text-[11px] uppercase tracking-[0.18em] text-gray-400">Total Misses</div>
+                                <div data-testid="miss-attr-total-value" class="mt-2 text-3xl font-light text-gray-100" x-text="formatNumber(missAttribution.total || 0)"></div>
+                                <div class="mt-1 text-xs text-gray-500">expected a cache hit, got none</div>
                             </div>
                         </div>
                     </div>
@@ -2399,6 +2437,16 @@
                         || (cvc.tokens_lost_to_cache_bust || 0) > 0
                         || (pf.tokens_preserved || 0) > 0
                         || (pf.compression_foregone_tokens || 0) > 0;
+                },
+
+                // --- Cache miss attribution (#1313) ---
+
+                get missAttribution() {
+                    return this.stats.prefix_cache?.miss_attribution?.totals || {};
+                },
+
+                get hasMissAttribution() {
+                    return (this.missAttribution.total || 0) > 0;
                 },
 
                 // --- Waste Signals ---
