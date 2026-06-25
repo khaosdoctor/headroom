@@ -13,10 +13,7 @@ def _import_callback() -> type:
     # Import the module directly to avoid triggering headroom/integrations/__init__.py
     # which pulls in langchain and the native .so extension.
     module_path = (
-        Path(__file__).resolve().parents[2]
-        / "headroom"
-        / "integrations"
-        / "litellm_callback.py"
+        Path(__file__).resolve().parents[2] / "headroom" / "integrations" / "litellm_callback.py"
     )
     spec = importlib.util.spec_from_file_location(
         "headroom.integrations.litellm_callback",
